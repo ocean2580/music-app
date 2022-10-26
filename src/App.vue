@@ -14,4 +14,8 @@
   height: 0.5rem;
 }
 
+a{
+  color: black;
+}
+
 </style>

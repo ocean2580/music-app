@@ -10,3 +10,7 @@ main.js 全局配置
 
 /request/index.js 基础请求地址/数据
 /request/api/home.js (首页)具体请求数据
+
+/router/index.js 注册路由
+/views/ItemMusic.vue 歌单详情页面
+
