@@ -22,6 +22,9 @@ import ItemMusicTop from '@/components/item/ItemMusicTop.vue' // 父引子
         let res = await getMusicItemList(id)
         console.log(res);
         state.playlist = res.data.playlist
+        // 防止页面刷新丢失数据，保存在本地 sessionStorage
+        sessionStorage.setItem('itemDetail', JSON.stringify(state))
+
       });
 
       return {state};

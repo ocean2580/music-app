@@ -28,7 +28,6 @@
     </div>
 
     <div class="contentRight">
-
       <p class="rightP_one">{{playlist.name}}</p>
         <div class="right_img">
           <img :src="playlist.creator.backgroundUrl" alt="">
@@ -59,7 +58,6 @@
       <span>下载</span>
     </div>
 
-
     <div class="footerItem">
       <svg t="1666774138411" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="34983" width="200" height="200"><path d="M503.808 47.104C248.832 47.104 40.96 254.976 40.96 509.952S248.832 972.8 503.808 972.8s462.848-207.872 462.848-462.848S758.784 47.104 503.808 47.104z m0 873.472c-226.304 0-410.624-184.32-410.624-410.624s184.32-410.624 410.624-410.624 410.624 184.32 410.624 410.624c-1.024 226.304-184.32 410.624-410.624 410.624z" p-id="34984"></path><path d="M701.44 358.4L434.176 625.664l-122.88-122.88c-12.288-12.288-32.768-12.288-45.056 0-12.288 12.288-12.288 32.768 0 45.056l144.384 144.384c6.144 6.144 15.36 9.216 23.552 9.216 8.192 0 17.408-3.072 23.552-9.216l288.768-288.768c12.288-12.288 12.288-32.768 0-45.056-12.288-12.288-32.768-12.288-45.056 0z" p-id="34985"></path></svg>
       <span>多选</span>
@@ -71,7 +69,11 @@
 export default {
   // 子接父
   setup(props) {
-    props.playlist.creator = ""
+    // 如果拿不到就sessionStorage中的
+    if((props.playlist.creator = "")) {
+      props.playlist.creator = JSON.parse(sessionStorage.getItem('itemDetail').playlist).creator;
+    }
+    
 
     function changeCount(num) {
       if (num >= 100000000) {
