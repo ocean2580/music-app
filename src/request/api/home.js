@@ -7,3 +7,11 @@ export function getBanner() {
     url: "/banner?type=2"
   })
 }
+
+// 发现好歌单
+export function getMusicList() {
+  return service({
+    method: "GET",
+    url: "/personalized?limit=10"
+  })
+}
