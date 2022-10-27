@@ -24,3 +24,5 @@
 ## 设计
 props父传子
 /views/ItemMusic.vue -> /components/item/ItemMusicTop.vue
+
+/store/index.js 存储数据
