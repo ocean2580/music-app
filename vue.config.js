@@ -11,5 +11,9 @@ module.exports = defineConfig({
       }),
     ],
   },
+  // 跨源读取阻塞 (CORB) 阻止了跨源响应
+  // devServer: {
+  //   proxy: 'http://music.163.com' 
+  // }
 })
 
