@@ -13,6 +13,7 @@ export default createStore({
     }],
     playListIndex: 0, // 默认下标
     isbtnShow: true, // 暂停按钮显示
+    detailShow: false,  // 歌曲详情
   },
   getters: {
   },
@@ -25,6 +26,9 @@ export default createStore({
     },
     updatePlayListIndex: function (state, value) {
       state.playListIndex = value
+    },
+    updateDetailShow: function (state) {
+      state.detailShow = !state.detailShow
     }
   },
   actions: {

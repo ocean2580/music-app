@@ -1,6 +1,6 @@
 <template>
   <div class="FooterMusic">
-    <div class="footerLeft">
+    <div class="footerLeft" @click="updateDetailShow">
       <img :src="playList[playListIndex].al.picUrl" alt="" />
       <div>
         <p>{{ playList[playListIndex].al.name }}</p>
@@ -34,6 +34,11 @@
     <!--  播放 -->
     <audio ref="audio"
       :src="`https://music.163.com/song/media/outer/url?id=${playList[playListIndex].id}.mp3 `"></audio>
+
+    <!-- 弹出层 -->
+    <van-popup v-model:show="detailShow" position="right" :style="{ height: '100%', width: '100%' }">
+      123
+    </van-popup>
   </div>
 </template>
 
@@ -43,7 +48,7 @@ import { mapMutations, mapState } from 'vuex'
 export default {
   computed: {
     // (解构)拿数据
-    ...mapState(['playList', 'playListIndex', 'isbtnShow'])
+    ...mapState(['playList', 'playListIndex', 'isbtnShow', 'detailShow'])
   },
   // mounted() {
   //   console.log(this.$refs);
@@ -59,7 +64,8 @@ export default {
         this.updateIsbtnShow(true)
       }
     },
-    ...mapMutations(['updateIsbtnShow'])
+    // (解构)提供方法
+    ...mapMutations(['updateIsbtnShow', 'updateDetailShow'])
   },
   // 监听
   watch: {
@@ -67,6 +73,13 @@ export default {
     playListIndex: function () {
       this.$refs.audio.autoplay = true
       if (this.$refs.audio.paused) {
+        this.updateIsbtnShow(false)
+      }
+    },
+    // 播放优化
+    playList: function () {
+      if (this.isbtnShow) {
+        this.$refs.audio.autoplay = true
         this.updateIsbtnShow(false)
       }
     }

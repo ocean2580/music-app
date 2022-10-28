@@ -1,8 +1,8 @@
-import { Swipe, SwipeItem, Button } from 'vant';
+import { Swipe, SwipeItem, Button, Popup } from 'vant';
 
 // 放入数组
 let plugins = [
-  Swipe, SwipeItem, Button
+  Swipe, SwipeItem, Button, Popup
 ]
 
 // 导出方法
