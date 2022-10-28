@@ -24,7 +24,8 @@
 
     <div class="itemList">
       <div class="item" v-for="(item, i) in itemList" :key="i">
-        <div class="itemLeft">
+        <!-- 点击触发playMusic事件 -->
+        <div class="itemLeft" @click="playMusic(i)">
           <span class="leftSpan">{{ i + 1 }}</span>
           <div>
             <p>{{ item.name }}</p>
@@ -58,13 +59,24 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   setup(props) {
     console.log(props);
   },
-  props: ['itemList', 'subscribedCount']
-}
+  props: ['itemList', 'subscribedCount'],
+  methods: {
+    playMusic: function (i) {
+      this.updatePlayList(this.itemList)
+      this.updatePlayListIndex(i);
+    },
+    ...mapMutations(['updatePlayList', 'updatePlayListIndex'])
+  }
+};
+
 </script>
+
 <style lang="less" scoped>
 .itemMusicList {
   width: 100%;

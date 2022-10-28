@@ -17,9 +17,14 @@ export default createStore({
   getters: {
   },
   mutations: {
-    // 
     updateIsbtnShow: function (state, value) {
       state.isbtnShow = value
+    },
+    updatePlayList: function (state, value) {
+      state.playList = value
+    },
+    updatePlayListIndex: function (state, value) {
+      state.playListIndex = value
     }
   },
   actions: {
