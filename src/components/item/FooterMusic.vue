@@ -53,8 +53,14 @@ export default {
     // (解构)拿数据
     ...mapState(['playList', 'playListIndex', 'isbtnShow', 'detailShow'])
   },
-  // mounted() {
-  //   console.log(this.$refs);
+  // 渲染
+  mounted() {
+    this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
+
+  },
+  //  获取歌词 
+  // updated() {
+  //   this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
   // },
   methods: {
     // 播放控制
@@ -74,6 +80,8 @@ export default {
   watch: {
     // 下标改变自动播放
     playListIndex: function () {
+      // 歌词
+      this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
       this.$refs.audio.autoplay = true
       if (this.$refs.audio.paused) {
         this.updateIsbtnShow(false)
@@ -81,6 +89,7 @@ export default {
     },
     // 播放优化
     playList: function () {
+      this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
       if (this.isbtnShow) {
         this.$refs.audio.autoplay = true
         this.updateIsbtnShow(false)

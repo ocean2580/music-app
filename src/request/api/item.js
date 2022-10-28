@@ -18,3 +18,11 @@ export function getItemList(data) {
     url: `/playlist/track/all?id=${data}&offset=0`
   })
 }
+
+// 歌词数据
+export function getMusicLyric(data) {
+  return service({
+    method: "GET",
+    url: `/lyric?id=${data}`
+  })
+}

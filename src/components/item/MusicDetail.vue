@@ -37,12 +37,18 @@
     </div>
   </div>
 
-  <div class="detailContent">
+  <div class="detailContent" v-show="isLyricShow">
     <!-- 根据播放状态切换样式 -->
     <img src="@/assets/needle.png" alt="" class="img_needle" :class="{ img_needle_active: !isbtnShow }">
     <img src="@/assets/cd.png" alt="" class="img_cd">
     <img :src="musicList.al.picUrl" alt="" class="img_ar"
       :class="{ img_ar_active: !isbtnShow, img_ar_paused: isbtnShow }">
+  </div>
+
+  <div class="musicLyric">
+    <p v-for="item in lyric" :key="item">
+      {{ item.lrc }}
+    </p>
   </div>
 
   <div class="detailFooter">
@@ -161,11 +167,34 @@
 <script>
 import { Vue3Marquee } from "vue3-marquee";
 import "vue3-marquee/dist/style.css";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 
 export default {
+  data() {
+    return {
+      isLyricShow: false
+    }
+  },
+  computed: {
+    ...mapState(['lyricList']),
+    lyric: function () {
+      let arr;
+      if (this.lyricList.lyric) {
+        // 换行符切割
+        arr = this.lyricList.lyric.split(/[(\r\n)\r\n]+/).map((item, i) => {
+          let min = item.slice(1, item.indexOf(':'))
+          let sec = item.slice(item.indexOf(':') + 1, item.indexOf('.'))
+          let mill = item.slice(item.indexOf('.') + 1, item.indexOf(']'))
+          let lrc = item.slice(item.indexOf(']') + 1)
+          // console.log(min, sec, mill, lrc);
+          return { min, sec, mill, lrc }
+        })
+      }
+      return arr
+    }
+  },
   mounted() {
-
+    console.log(this.lyricList.lyric);
   },
   // 从父级传来
   props: ['musicList', 'isbtnShow', 'play'],
@@ -281,6 +310,22 @@ export default {
     100% {
       transform: rotateZ(360deg);
     }
+  }
+}
+
+.musicLyric {
+  width: 100%;
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: .2rem;
+  overflow: scroll; // 溢出滚动
+
+  p {
+    color: rgb(197, 194, 194);
+    margin-bottom: .4rem;
+
   }
 }
 
