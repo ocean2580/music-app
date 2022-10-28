@@ -1,5 +1,5 @@
 <template>
-  <img :src="musicList.al.picUrl" alt="" class="bgimg">
+  <img :src="musicList.al.picUrl" alt="" class="bgimg" />
   <div class="detailTop">
     <div class="detailTopLeft">
       <svg t="1666770886096" class="icon back" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -33,10 +33,16 @@
           p-id="29714"></path>
         <path d="M650.299 681.865" p-id="29715"></path>
       </svg>
+
     </div>
-
-
   </div>
+
+  <div class="detailContent">
+    <img src="@/assets/needle.png" alt="" class="img_needle">
+    <img src="@/assets/cd.png" alt="" class="img_cd">
+    <img :src="musicList.al.picUrl" alt="" class="img_ar">
+  </div>
+
 </template>
 
 
@@ -94,5 +100,53 @@ export default {
       }
     }
   }
+}
+
+.detailContent {
+  width: 100%;
+  height: 9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .img_needle {
+    width: 2rem;
+    height: 3rem;
+    position: absolute;
+    left: 46%;
+    transform-origin: 0 0;
+    transform: rotate(-13deg);
+    transition: all 2s;
+  }
+
+  .img_needle_active {
+    width: 2rem;
+    height: 3rem;
+    position: absolute;
+    left: 46%;
+    transform-origin: 0 0;
+    transform: rotate(0deg);
+    transition: all 2s;
+  }
+
+  .img_cd {
+    width: 5rem;
+    height: 5rem;
+    position: absolute;
+    bottom: 2.3rem;
+    z-index: -1;
+  }
+
+  .img_ar {
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 3.14rem;
+    animation: rotate_ar 10s linear infinite;
+  }
+
+
 }
 </style>
