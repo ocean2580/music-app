@@ -3,7 +3,8 @@
     <div class="footerLeft" @click="updateDetailShow">
       <img :src="playList[playListIndex].al.picUrl" alt="" />
       <div>
-        <p>{{ playList[playListIndex].al.name }}</p>
+        <!-- 歌名 -->
+        <p>{{ playList[playListIndex].name }}</p>
         <span>横滑切换上下首哦</span>
       </div>
     </div>
@@ -49,6 +50,11 @@ import { mapMutations, mapState } from 'vuex'
 import MusicDetail from '@/components/item/MusicDetail.vue'
 
 export default {
+  data() {
+    return {
+      interval: 0
+    }
+  },
   computed: {
     // (解构)拿数据
     ...mapState(['playList', 'playListIndex', 'isbtnShow', 'detailShow'])
@@ -56,7 +62,8 @@ export default {
   // 渲染
   mounted() {
     this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
-
+    // 滚动歌词
+    this.updateTime()
   },
   //  获取歌词 
   // updated() {
@@ -68,13 +75,21 @@ export default {
       if (this.$refs.audio.paused) {
         this.$refs.audio.play()
         this.updateIsbtnShow(false)
+        this.updateTime() //  开启定时任务
       } else {
         this.$refs.audio.pause()
         this.updateIsbtnShow(true)
+        clearInterval(this.interval) //  清除定时任务
       }
     },
+    updateTime: function () {
+      // 每1s执行一次
+      this.interval = setInterval(() => {
+        this.updateCurrentTime(this.$refs.audio.currentTime)
+      }, 10)
+    },
     // (解构)提供方法
-    ...mapMutations(['updateIsbtnShow', 'updateDetailShow'])
+    ...mapMutations(['updateIsbtnShow', 'updateDetailShow', 'updateCurrentTime'])
   },
   // 监听
   watch: {

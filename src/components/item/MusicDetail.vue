@@ -45,8 +45,10 @@
       :class="{ img_ar_active: !isbtnShow, img_ar_paused: isbtnShow }">
   </div>
 
-  <div class="musicLyric">
-    <p v-for="item in lyric" :key="item">
+  <div class="musicLyric" ref="musicLyric">
+    <!-- 时间判断 -->
+    <p v-for="item in lyric" :key="item"
+      :class="{ active: (currentTime * 1000) >= item.time && (currentTime * 1000) < item.pre }">
       {{ item.lrc }}
     </p>
   </div>
@@ -176,7 +178,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['lyricList']),
+    ...mapState(['lyricList', 'currentTime']),
     lyric: function () {
       let arr;
       if (this.lyricList.lyric) {
@@ -186,10 +188,19 @@ export default {
           let sec = item.slice(item.indexOf(':') + 1, item.indexOf('.'))
           let mill = item.slice(item.indexOf('.') + 1, item.indexOf(']'))
           let lrc = item.slice(item.indexOf(']') + 1)
-          // console.log(min, sec, mill, lrc);
-          return { min, sec, mill, lrc }
+          let time = parseInt(min) * 60 * 1000 + parseInt(sec) * 1000 + parseInt(mill)
+          return { min, sec, mill, lrc, time }
         })
+
+        arr.forEach((item, i) => {
+          if (i === arr.length - 1) {
+            item.pre = 0
+          } else {
+            item.pre = arr[i + 1].time
+          }
+        });
       }
+      // console.log(arr);
       return arr
     }
   },
@@ -198,6 +209,14 @@ export default {
   },
   // 从父级传来
   props: ['musicList', 'isbtnShow', 'play'],
+  watch: {
+    currentTime: function () {
+      let p = document.querySelector("p.active")
+      if (p.offsetTop > 300) {
+        this.$refs.musicLyric.scrollTop = p.offsetTop - 300
+      }
+    }
+  },
   components: {
     Vue3Marquee
   },
@@ -315,17 +334,22 @@ export default {
 
 .musicLyric {
   width: 100%;
-  height: 9rem;
+  height: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: .2rem;
   overflow: scroll; // 溢出滚动
+  scroll-behavior: smooth;
 
   p {
     color: rgb(197, 194, 194);
     margin-bottom: .4rem;
+  }
 
+  .active {
+    color: #fff;
+    font-size: .5rem;
   }
 }
 

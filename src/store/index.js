@@ -18,7 +18,8 @@ export default createStore({
     playListIndex: 0, // 默认下标
     isbtnShow: true, // 暂停按钮显示
     detailShow: false,  // 歌曲详情
-    lyricList: {} // 歌词
+    lyricList: {}, // 歌词
+    currentTime: 0, // 当前时间
   },
   getters: {
   },
@@ -37,6 +38,10 @@ export default createStore({
     },
     updateLyricList: function (state, value) {
       state.lyricList = value
+    },
+    updateCurrentTime: function (state, value) {
+      state.currentTime = value
+      console.log(value);
     }
   },
   // 异步请求
