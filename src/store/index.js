@@ -9,7 +9,10 @@ export default createStore({
         pic: 1419469524716144,
         picUrl: "https://p1.music.126.net/Dvhon4mH7qimTtE7q3omTw==/1419469524716144.jpg"
       },
-      id: 1060914
+      id: 1060914,
+      ar: [{
+        name: 'unknown'
+      }]
     }],
     playListIndex: 0, // 默认下标
     isbtnShow: true, // 暂停按钮显示
