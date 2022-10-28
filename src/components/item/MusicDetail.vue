@@ -38,9 +38,11 @@
   </div>
 
   <div class="detailContent">
-    <img src="@/assets/needle.png" alt="" class="img_needle">
+    <!-- 根据播放状态切换样式 -->
+    <img src="@/assets/needle.png" alt="" class="img_needle" :class="{ img_needle_active: !isbtnShow }">
     <img src="@/assets/cd.png" alt="" class="img_cd">
-    <img :src="musicList.al.picUrl" alt="" class="img_ar">
+    <img :src="musicList.al.picUrl" alt="" class="img_ar"
+      :class="{ img_ar_active: !isbtnShow, img_ar_paused: isbtnShow }">
   </div>
 
   <div class="detailFooter">
@@ -262,10 +264,24 @@ export default {
     animation: rotate_ar 10s linear infinite;
   }
 
+  .img_ar_active {
+    animation-play-state: running;
+  }
 
+  .img_ar_paused {
+    animation-play-state: paused;
+  }
 
+  // 动画
+  @keyframes rotate_ar {
+    0% {
+      transform: rotateZ(0deg);
+    }
 
-
+    100% {
+      transform: rotateZ(360deg);
+    }
+  }
 }
 
 .detailFooter {
