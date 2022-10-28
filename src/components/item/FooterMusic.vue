@@ -37,13 +37,16 @@
 
     <!-- 弹出层 -->
     <van-popup v-model:show="detailShow" position="right" :style="{ height: '100%', width: '100%' }">
-      123
+      <!-- MusicDetail.vue -->
+      <MusicDetail :musicList="playList[playListIndex]" />
     </van-popup>
+
   </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
+import MusicDetail from '@/components/item/MusicDetail.vue'
 
 export default {
   computed: {
@@ -83,6 +86,9 @@ export default {
         this.updateIsbtnShow(false)
       }
     }
+  },
+  components: {
+    MusicDetail
   }
 
 }
