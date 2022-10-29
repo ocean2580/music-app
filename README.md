@@ -22,6 +22,9 @@ router-view <br/>
 /components/item/MusicDetail.vue 详情页 <br/>
 /components/item/ItemMusicList.vue 歌曲列表 <br/>
 
+## Search.vue
+
+
 
 ## @/request/api
 /request/index.js 基础请求地址/数据 <br/><br/>
