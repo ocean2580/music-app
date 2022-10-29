@@ -84,7 +84,7 @@ export default {
         clearInterval(this.interval) //  清除定时任务
       }
     },
-    addDuration:function() {
+    addDuration: function () {
       this.updateDuration(this.$refs.audio.duration)
     },
     updateTime: function () {

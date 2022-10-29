@@ -21,8 +21,8 @@ export default createStore({
     lyricList: {}, // 歌词
     currentTime: 0, // 当前时间
     duration: 0,  // 歌曲总时长
-  },
-  getters: {
+    isLogin: false, // 是否登录
+    isFooterMusic: true, // 底部组件是否显示
   },
   mutations: {
     updateIsbtnShow: function (state, value) {
