@@ -112,7 +112,9 @@
 
     </div>
 
-    <div class="footerContent"></div>
+    <div class="footerContent">
+      <input type="range" class="range" min="0" :max="duration" v-model="currentTime" step="0.05">
+    </div>
 
     <div class="footer">
       <svg t="1666938069331" class="icon loop" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -179,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['lyricList', 'currentTime', 'playListIndex', 'playList']),
+    ...mapState(['lyricList', 'currentTime', 'playListIndex', 'playList', 'duration']),
     lyric: function () {
       let arr;
       if (this.lyricList.lyric) {
@@ -194,8 +196,8 @@ export default {
         })
 
         arr.forEach((item, i) => {
-          if (i === arr.length - 1) {
-            item.pre = 0
+          if (i === arr.length - 1 || isNaN(arr[i + 1].time)) {
+            item.pre = 100000
           } else {
             item.pre = arr[i + 1].time
           }
@@ -206,15 +208,22 @@ export default {
     }
   },
   mounted() {
+    this.addDuration()
     console.log(this.lyricList.lyric);
   },
   // 从父级传来
-  props: ['musicList', 'isbtnShow', 'play'],
+  props: ['musicList', 'isbtnShow', 'play', 'addDuration'],
   watch: {
-    currentTime: function () {
+    currentTime: function (newValue) {
       let p = document.querySelector("p.active")
-      if (p.offsetTop > 300) {
-        this.$refs.musicLyric.scrollTop = p.offsetTop - 300
+      if (p) {
+        if (p.offsetTop > 300) {
+          this.$refs.musicLyric.scrollTop = p.offsetTop - 300
+        }
+      }
+      // 播完开始下一首
+      if (newValue === this.duration) {
+        this.goPlay(1);
       }
     }
   },

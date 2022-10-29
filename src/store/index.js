@@ -20,6 +20,7 @@ export default createStore({
     detailShow: false,  // 歌曲详情
     lyricList: {}, // 歌词
     currentTime: 0, // 当前时间
+    duration: 0,  // 歌曲总时长
   },
   getters: {
   },
@@ -45,6 +46,9 @@ export default createStore({
     },
     updatePlayListIndex: function (state, value) {
       state.playListIndex = value
+    },
+    updateDuration: function (state, value) {
+      state.duration = value
     }
   },
   // 异步请求

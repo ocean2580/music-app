@@ -39,7 +39,8 @@
     <!-- 弹出层 -->
     <van-popup v-model:show="detailShow" position="right" :style="{ height: '100%', width: '100%' }">
       <!-- MusicDetail.vue -->
-      <MusicDetail :musicList="playList[playListIndex]" :play="play" :isbtnShow="isbtnShow" />
+      <MusicDetail :musicList="playList[playListIndex]" :play="play" :isbtnShow="isbtnShow"
+        :addDuration="addDuration" />
     </van-popup>
 
   </div>
@@ -65,10 +66,11 @@ export default {
     // 滚动歌词
     this.updateTime()
   },
-  //  获取歌词 
-  // updated() {
-  //   this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
-  // },
+  // 获取歌词 
+  updated() {
+    this.$store.dispatch("getLyric", this.playList[this.playListIndex].id)
+    this.addDuration()
+  },
   methods: {
     // 播放控制
     play: function () {
@@ -82,6 +84,9 @@ export default {
         clearInterval(this.interval) //  清除定时任务
       }
     },
+    addDuration:function() {
+      this.updateDuration(this.$refs.audio.duration)
+    },
     updateTime: function () {
       // 每1s执行一次
       this.interval = setInterval(() => {
@@ -89,7 +94,7 @@ export default {
       }, 10)
     },
     // (解构)提供方法
-    ...mapMutations(['updateIsbtnShow', 'updateDetailShow', 'updateCurrentTime'])
+    ...mapMutations(['updateIsbtnShow', 'updateDetailShow', 'updateCurrentTime', 'updateDuration'])
   },
   // 监听
   watch: {
