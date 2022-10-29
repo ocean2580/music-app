@@ -42,6 +42,9 @@ export default createStore({
     updateCurrentTime: function (state, value) {
       state.currentTime = value
       console.log(value);
+    },
+    updatePlayListIndex: function (state, value) {
+      state.playListIndex = value
     }
   },
   // 异步请求

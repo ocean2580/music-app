@@ -179,7 +179,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['lyricList', 'currentTime']),
+    ...mapState(['lyricList', 'currentTime', 'playListIndex', 'playList']),
     lyric: function () {
       let arr;
       if (this.lyricList.lyric) {
@@ -226,7 +226,17 @@ export default {
       this.isLyricShow = false
       this.updateDetailShow()
     },
-    ...mapMutations(['updateDetailShow'])
+    //  切换上下首（循环）
+    goPlay: function (num) {
+      let index = this.playListIndex + num
+      if (index < 0) {
+        index = this.playList.length - 1
+      } else if (index == this.playList.length) {
+        index = 0
+      }
+      this.updatePlayListIndex(index)
+    },
+    ...mapMutations(['updateDetailShow', 'updatePlayListIndex'])
   }
 }
 </script>
