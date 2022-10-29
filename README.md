@@ -19,7 +19,7 @@ router-view <br/>
 
 ## ItemMusic.vue
 /components/item/ItemMusicTop.vue 顶部 <br/>
-/components/item/MusicDetail.vue 详情页 <br/>
+/components/item/MusicDetail.vue 详情 <br/>
 /components/item/ItemMusicList.vue 歌曲列表 <br/>
 
 ## Search.vue

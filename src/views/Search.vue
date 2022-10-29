@@ -26,17 +26,48 @@
 
   <div class="itemList">
     <div class="item" v-for="(item, i) in searchList" :key="i">
+      <!-- 点击触发playMusic事件 -->
+      <div class="itemLeft" @click="updateIndex(item)">
+        <span class="leftSpan">{{ i + 1 }}</span>
+        <div>
+          <p>{{ item.name }}</p>
+          <span v-for="(item1, index) in item.ar" :key="index">{{
+              item1.name
+          }}</span>
+        </div>
+      </div>
 
+      <div class="itemRight">
+        <!-- 没有mv则不显示 -->
+        <svg v-if='item.mv != 0' t="1666795371889" class="icon bofang" viewBox="0 0 1024 1024" version="1.1"
+          xmlns="http://www.w3.org/2000/svg" p-id="9251" width="200" height="200">
+          <path
+            d="M206.935452 206.935452a50.844091 50.844091 0 0 0-50.844092 50.844091v508.440914a50.844091 50.844091 0 0 0 50.844092 50.844091h610.129096a50.844091 50.844091 0 0 0 50.844092-50.844091v-508.440914a50.844091 50.844091 0 0 0-50.844092-50.844091z m0-101.688183h610.129096a152.532274 152.532274 0 0 1 152.532274 152.532274v508.440914a152.532274 152.532274 0 0 1-152.532274 152.532274h-610.129096a152.532274 152.532274 0 0 1-152.532274-152.532274v-508.440914a152.532274 152.532274 0 0 1 152.532274-152.532274z"
+            fill="#bfbfbf" p-id="9252"></path>
+          <path
+            d="M651.821251 559.285005l-162.701092 108.297915a50.844091 50.844091 0 0 1-78.808342-42.200596V410.311817a50.844091 50.844091 0 0 1 78.808342-42.200596l162.701092 108.297915a50.844091 50.844091 0 0 1 0 84.401192z"
+            fill="#bfbfbf" p-id="9253"></path>
+        </svg>
+        <svg t="1666795423369" class="icon liebiao" viewBox="0 0 1024 1024" version="1.1"
+          xmlns="http://www.w3.org/2000/svg" p-id="10214" width="200" height="200">
+          <path
+            d="M98.357122 818.73194c-14.213723 0-25.764803 11.532661-25.764803 25.76071 0 14.233166 11.55108 25.770943 25.764803 25.770943M922.866648 818.73194 98.128925 818.73194c-14.21884 0-25.770943 11.532661-25.770943 25.76071 0 14.233166 11.552104 25.770943 25.770943 25.770943l824.737724 0c14.213723 0 25.764803-11.538801 25.764803-25.770943C948.633498 830.262554 937.081395 818.73194 922.866648 818.73194zM98.357122 483.770052c-14.213723 0-25.764803 11.537777-25.764803 25.76992 0 14.229073 11.55108 25.764803 25.764803 25.764803M922.866648 483.770052 98.128925 483.770052c-14.21884 0-25.770943 11.537777-25.770943 25.76992 0 14.229073 11.552104 25.764803 25.770943 25.764803l824.737724 0c14.213723 0 25.764803-11.537777 25.764803-25.764803C948.633498 495.307829 937.081395 483.770052 922.866648 483.770052zM98.357122 148.815327c-14.213723 0-25.764803 11.539824-25.764803 25.768897 0 14.227026 11.55108 25.76378 25.764803 25.76378M98.128925 200.346981l824.737724 0c14.213723 0 25.764803-11.536754 25.764803-25.76378 0-14.229073-11.55108-25.768897-25.764803-25.768897L98.128925 148.814304c-14.21884 0-25.770943 11.539824-25.770943 25.768897C72.359005 188.81125 83.911108 200.346981 98.128925 200.346981z"
+            p-id="10215" fill="#cdcdcd"></path>
+        </svg>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { getSearchMusic } from '@/request/api/home.js'
+
 export default {
   data() {
     return {
       keyWordList: [],
-      searchKey: ""
+      searchKey: "",
+      searchList: [],
     }
   },
   mounted() {
@@ -45,7 +76,7 @@ export default {
       : [];
   },
   methods: {
-    enterKey: function () {
+    enterKey: async function () {
       if (this.searchKey) {
         // 头插
         this.keyWordList.unshift(this.searchKey)
@@ -56,6 +87,10 @@ export default {
           this.keyWordList.pop()
         }
         localStorage.setItem("keyWordList", JSON.stringify(this.keyWordList))
+        // 搜索
+        let res = await getSearchMusic(this.searchKey)
+        console.log(res);
+        this.searchList = res.data.result.songs
         this.searchKey = ""
       }
     },
@@ -63,6 +98,16 @@ export default {
     delHistory: function () {
       this.keyWordList = []
       localStorage.removeItem("keyWordList")
+    },
+    searchHistory: async function (item) {
+      // 搜索
+      let res = await getSearchMusic(item)
+      console.log(res);
+      this.searchList = res.data.result.songs
+    },
+    updateIndex: function (item) {
+      this.$store.commit("pushPlayList", item)
+      this.$store.commit("updatePlayListIndex", this.$store.state.playList.length - 1)
     }
   }
 }
@@ -107,6 +152,74 @@ export default {
     height: .4rem;
     position: absolute;
     right: .2rem;
+  }
+}
+
+.itemList {
+  width: 100%;
+  padding: .2rem;
+
+  .item {
+    width: 100%;
+    height: 1.4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .itemLeft {
+      width: 85%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      .leftSpan {
+        display: inline-block;
+        width: 0.2rem;
+        text-align: center;
+      }
+
+      div {
+        p {
+          width: 4.54rem;
+          height: .4rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-weight: 700;
+        }
+
+        span {
+          font-weight: 400;
+          font-size: .24rem;
+          color: #999;
+        }
+
+        margin-left: 0.3rem;
+      }
+    }
+
+    .itemRight {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      // justify-content: space-between;
+      align-items: center;
+      position: relative;
+
+      .icon {
+        fill: #999;
+      }
+
+      .bofang {
+        position: absolute;
+        left: 0;
+      }
+
+      .liebiao {
+        position: absolute;
+        right: 0;
+      }
+    }
   }
 }
 </style>

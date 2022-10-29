@@ -28,6 +28,9 @@ export default createStore({
     updateIsbtnShow: function (state, value) {
       state.isbtnShow = value
     },
+    pushPlayList: function (state, value) {
+      state.playList.push(value)
+    },
     updatePlayList: function (state, value) {
       state.playList = value
     },
@@ -42,7 +45,7 @@ export default createStore({
     },
     updateCurrentTime: function (state, value) {
       state.currentTime = value
-      console.log(value);
+      // console.log(value);
     },
     updatePlayListIndex: function (state, value) {
       state.playListIndex = value

@@ -15,3 +15,11 @@ export function getMusicList() {
     url: "/personalized?limit=10"
   })
 }
+
+// 搜索
+export function getSearchMusic(data) {
+  return service({
+    method: "GET",
+    url: `/search?keywords=${data}`
+  })
+}

@@ -225,6 +225,10 @@ export default {
       if (newValue === this.duration) {
         this.goPlay(1);
       }
+    },
+    // 切换歌曲进度条归零
+    playListIndex: function () {
+      document.querySelector('.range').value = 0
     }
   },
   components: {
