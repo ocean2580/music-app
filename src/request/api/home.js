@@ -23,3 +23,11 @@ export function getSearchMusic(data) {
     url: `/search?keywords=${data}`
   })
 }
+
+// 搜索
+export function getPhoneLogin(data) {
+  return service({
+    method: "GET",
+    url: `/login/cellphone?phone=${data.phone}&password=${data.password}`
+  })
+}

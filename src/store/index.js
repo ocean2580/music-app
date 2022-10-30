@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { getMusicLyric } from '@/request/api/item.js'
+import { getPhoneLogin } from '@/request/api/home'
 
 export default createStore({
   state: {
@@ -52,6 +53,9 @@ export default createStore({
     },
     updateDuration: function (state, value) {
       state.duration = value
+    },
+    updateIsLogin: function (state, value) {
+      state.isLogin = true
     }
   },
   // 异步请求
@@ -60,6 +64,11 @@ export default createStore({
       let res = await getMusicLyric(value)
       console.log(res);
       context.commit("updateLyricList", res.data.lrc)
+    },
+    getLogin: async function (context, value) {
+      let res = await getPhoneLogin(value)
+      // console.log(res);
+      return res
     }
   },
   modules: {

@@ -4,21 +4,23 @@
       <h2>登录系统</h2>
       <form>
         <div class="user-box">
-          <input type="text" name="" required="" v-model="username">
+          <input type="text" v-model="phone">
           <label>手机号</label>
         </div>
         <div class="user-box">
-          <input type="password" name="" required="" v-model="password">
+          <input type="password" v-model="password">
           <label>密码</label>
         </div>
+
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a @click="handleSubmit">
+        <a @click="Login">
           <span></span>
           <span></span>
           <span></span>
           <span></span>
           登录
         </a>
+
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a @click="signUp_asd">注册 </a>
       </form>
@@ -27,80 +29,28 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
-  name: "Login",
   data() {
     return {
-      username: '',
-      password: '',
-      msg: ''
+      phone: '',
+      password: ''
     }
   },
   methods: {
-    signUp_asd() {
-      this.$router.replace({ path: '/signUp' });
-    },
-    open1() {
-      this.$message({
-        showClose: true,
-        message: this.msg,
-        type: 'warning'
-      });
-    },
-    open2() {
-      this.$message({
-        showClose: true,
-        message: this.msg,
-        type: 'success'
-      });
-    },
-    open3() {
-      this.$message({
-        showClose: true,
-        message: this.msg,
-        type: 'error'
-      });
-    },
-
-    handleSubmit() {
-      let _this = this
-      if (this.username === "" || this.password === "") {
-        this.msg = "请输入邮箱密码"
-        this.open3()
+    Login: async function () {
+      let res = await this.$store.dispatch('getLogin', { phone: this.phone, password: this.password })
+      console.log(res);
+      if (res.data.code === 200) {
+        this.$store.commit("updateIsLogin", true)
+        this.$router.push('/infoUser')
       } else {
-        axios.post('http://localhost:8412/user/userLogin',
-          {
-            email: this.username,
-            password: this.password
-          })
-          .catch(function (error) {
-            console.log(error.response.data.msg)
-            _this.msg = "请检查邮箱是否合法"
-            _this.open3()
-          }).then(function (response) {
-            console.log(response)
-            if (response.data.code === 200) {
-              _this.msg = response.data.msg
-              _this.open2()
-              //此处开始配置全局
-              _this.$store.commit('setUserMsg', {
-                id: response.data.data.id,
-                email: response.data.data.email,
-                username: response.data.data.username
-              });
-              _this.$store.commit('print');
-              _this.$router.replace({ path: '/ziti' });
-            } else {
-              _this.msg = response.data.msg
-              _this.open3()
-            }
-          })
+        alert("登陆失败，请重试")
+        this.password = ''
       }
-    },
-  },
-}
-  ;
+    }
+  }
+};
+
 </script>
 
 <style lang="less" scoped>
