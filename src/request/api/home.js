@@ -24,10 +24,18 @@ export function getSearchMusic(data) {
   })
 }
 
-// 搜索
+// 登录
 export function getPhoneLogin(data) {
   return service({
     method: "GET",
     url: `/login/cellphone?phone=${data.phone}&password=${data.password}`
+  })
+}
+
+// 详情
+export function getLoginUser(data) {
+  return service({
+    method: "GET",
+    url: `/user/detail?uid=${data}`
   })
 }

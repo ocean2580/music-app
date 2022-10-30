@@ -24,6 +24,8 @@ export default createStore({
     duration: 0,  // 歌曲总时长
     isLogin: false, // 是否登录
     isFooterMusic: true, // 底部组件是否显示
+    token: "", // 令牌
+    user: {}  //  用户 
   },
   mutations: {
     updateIsbtnShow: function (state, value) {
@@ -56,7 +58,14 @@ export default createStore({
     },
     updateIsLogin: function (state, value) {
       state.isLogin = true
-    }
+    },
+    updateToken: function (state, value) {
+      state.token = value
+      localStorage.setItem("token", state.token)
+    },
+    updateUser: function (state, value) {
+      state.user = value
+    },
   },
   // 异步请求
   actions: {

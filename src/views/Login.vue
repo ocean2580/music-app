@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { getLoginUser } from '@/request/api/home.js'
 export default {
   data() {
     return {
@@ -41,7 +42,12 @@ export default {
       let res = await this.$store.dispatch('getLogin', { phone: this.phone, password: this.password })
       console.log(res);
       if (res.data.code === 200) {
+        // 更新数据
         this.$store.commit("updateIsLogin", true)
+        this.$store.commit("updateToken", res.data.token)
+        let result = await getLoginUser(res.data.account.id)
+        this.$store.commit("updateUser", result)
+        // 跳转
         this.$router.push('/infoUser')
       } else {
         alert("登陆失败，请重试")

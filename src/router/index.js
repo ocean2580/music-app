@@ -45,7 +45,8 @@ const routes = [
     name: 'InfoUser',
     // 路由守卫
     beforeEnter: (to, from, next) => {
-      if (store.state.isLogin) {
+      //TODO || &&
+      if (store.state.isLogin || store.state.token || localStorage.getItem('token')) {
         next()
       } else {
         next('/login')
