@@ -37,3 +37,15 @@ props父传子<br/>
 /views/ItemMusic.vue -> /components/item/ItemMusicTop.vue<br/><br/>
 
 /store/index.js 存储数据<br/>
+
+
+
+## 启动
+
+后台<br/>
+	node app.js<br/><br/>
+
+前台<br/>
+	cd wyy-app<br/>
+	npm run serve<br/>
+
