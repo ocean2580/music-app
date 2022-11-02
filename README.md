@@ -43,7 +43,10 @@ props父传子<br/>
 ## 启动
 
 后台<br/>
-	node app.js<br/><br/>
+
+​	安装 NeteaseCloudMusicApi<br/>
+
+​	node app.js<br/><br/>
 
 前台<br/>
 	cd wyy-app<br/>
