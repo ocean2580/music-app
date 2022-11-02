@@ -1,5 +1,5 @@
 <template>
-  <!-- 父传子 -->
+  <!-- 2.父传子 -->
   <ItemMusicTop :playlist="state.playlist" />
   <ItemMusicList :itemList="state.itemList" :subscribedCount="state.playlist.subscribedCount" />
 </template>
@@ -8,7 +8,7 @@
 import { useRoute } from 'vue-router'
 import { onMounted, reactive } from 'vue'
 import { getMusicItemList, getItemList } from '@/request/api/item.js'
-import ItemMusicTop from '@/components/item/ItemMusicTop.vue' // 父引子
+import ItemMusicTop from '@/components/item/ItemMusicTop.vue' // 1.父引子
 import ItemMusicList from '@/components/item/ItemMusicList.vue'
 
 export default {

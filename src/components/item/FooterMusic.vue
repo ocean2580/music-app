@@ -56,6 +56,7 @@ export default {
       interval: 0
     }
   },
+  // 计算属性
   computed: {
     // (解构)拿数据
     ...mapState(['playList', 'playListIndex', 'isbtnShow', 'detailShow'])

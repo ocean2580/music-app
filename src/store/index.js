@@ -27,6 +27,7 @@ export default createStore({
     token: "", // 令牌
     user: {}  //  用户 
   },
+
   mutations: {
     updateIsbtnShow: function (state, value) {
       state.isbtnShow = value
@@ -67,6 +68,7 @@ export default createStore({
       state.user = value
     },
   },
+
   // 异步请求
   actions: {
     getLyric: async function (context, value) {
@@ -80,6 +82,7 @@ export default createStore({
       return res
     }
   },
+
   modules: {
   }
 })

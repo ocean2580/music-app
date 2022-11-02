@@ -1,9 +1,12 @@
 <template>
+  <!-- 路由占位符 -->
   <router-view />
+  <!-- 组件 -->
   <FooterMusic v-show="$store.state.isFooterMusic" />
 </template>
 
 <script>
+// 引入
 import FooterMusic from '@/components/item/FooterMusic.vue'
 export default {
   components: {
@@ -11,7 +14,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="less">
 * {
